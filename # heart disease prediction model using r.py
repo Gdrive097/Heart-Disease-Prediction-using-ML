@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, roc_curve, roc_auc_score
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, roc_curve, roc_auc_score, ConfusionMatrixDisplay, precision_score, recall_score, f1_score
 from geopy.geocoders import Nominatim
 import requests
 import webbrowser
@@ -186,3 +186,25 @@ else:
         print(f"Please use your phone to call {nearest_hospital['name']} at {nearest_hospital['phone']}")
     else:
         print("No hospitals found with available phone numbers nearby. Please contact emergency services.")
+
+# 1. Classification Report
+print("Classification Report:")
+print(classification_report(y_test, y_pred))
+
+# 2. Confusion Matrix (Text + Plot)
+cm = confusion_matrix(y_test, y_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+disp.plot(cmap='Blues')
+plt.title('Confusion Matrix')
+plt.show()
+
+# 3. Individual Metrics
+acc = accuracy_score(y_test, y_pred)
+prec = precision_score(y_test, y_pred)
+rec = recall_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)
+
+print(f"\nAccuracy:  {acc:.4f}")
+print(f"Precision: {prec:.4f}")
+print(f"Recall:    {rec:.4f}")
+print(f"F1 Score:  {f1:.4f}")
